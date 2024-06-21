@@ -1,0 +1,39 @@
+function starsender(event){
+    var APIKey = "API_KEY";
+    var url = "https://api.starsender.online/api/send";
+    var name = event.namedValues["Nama Pegawai"][0].split(' - ');
+    const namaPegawai = name[0].trim();
+    const nomor = name[1].trim();
+    var kejadian = event.namedValues["Kejadian"][0];
+    var tanggal = event.namedValues["Tanggal Kejadian"][0];
+
+    var tujuan = [nomor];
+    var pesan = [`Semangat Siang ` + namaPegawai + `,
+
+Kindly Reminder
+Menurut data kami, Anda *` + kejadian + `* pada tanggal ` + tanggal + `.
+
+Mohon konfirmasi atas data tersebut, paling lambat 24 jam setelah pesan ini diterima. Apabila tidak ada konfirmasi, data tersebut yang akan kami gunakan sebagai dasar pembayaran Tukin dan laporan GDN.
+
+Terima Kasih`];
+
+    for (var i = 0; i < tujuan.length; i++) {
+        if(!pesan[i] || !tujuan[i]) continue;
+
+        var payload = {
+            "messageType": "text",
+            "body": pesan[i],
+            "to": tujuan[i]
+        };
+
+        var response = UrlFetchApp.fetch(url, {
+            "method": "post",
+            "headers": {
+                "Authorization": APIKey
+            },
+            "payload": JSON.stringify(payload)
+        });
+        
+        Logger.log(response.getContentText());
+    }
+}
