@@ -1,6 +1,6 @@
 function starsender(event){
     var APIKey = "API_KEY";
-    var url = "https://api.starsender.online/api/send";
+    var url = "URL_KEY";
     var name = event.namedValues["Nama Pegawai"][0].split(' - ');
     const namaPegawai = name[0].trim();
     const nomor = name[1].trim();
